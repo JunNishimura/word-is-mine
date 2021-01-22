@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
+        <!-- <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">  -->
+        <link rel="stylesheet" type="text/css" href="./css/main.css">
+        <title>WORD IS MINE</title>
+    </head>
+    <body>
+        <div id="app">
+            <div id="home">
+                <div class="display">
+                    <div class="display-word__box fixed-word__box">
+                        <span class="fixed-word">I</span>
+                    </div>
+                    <div class="display-word__box selected-word__box" :class="{blank: displayWord.verb.length === 0, focus: state === 'verb'}" id="verb" @click="changeState('verb')">
+                        <span class="selected-word">{{ displayWord.verb }}</span>
+                    </div>
+                    <div class="display-word__box fixed-word__box">
+                        <span class="fixed-word">{{ article }}</span>
+                    </div>
+                    <div class="display-word__box selected-word__box" :class="{blank: displayWord.adjective.length === 0, focus: state === 'adjective'}" id="adjective" @click="changeState('adjective')">
+                        <span class="selected-word">{{ displayWord.adjective }}</span>
+                    </div>
+                    <div class="display-word__box selected-word__box" :class="{blank: displayWord.noun.length === 0, focus: state === 'noun'}" id="noun" @click="changeState('noun')">
+                        <span class="selected-word">{{ displayWord.noun }}</span>
+                    </div>
+                </div>
+    
+                <div class="select-box">
+                    <div class="words">
+                        <div v-for="(word, index) in selectWords" :key="index" class="word">
+                            <span @click="selectWord(word)">{{ word }}</span>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="footer">
+                    <div class="date">
+                        <h3>{{ displayTime }}&emsp;{{ displayDate }}</h3>
+                    </div>
+                    <div class="tag">
+                        <h3>#WORD_IS_MINE</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+        <script src="./js/main.js"></script>
+    </body>
+</html>
