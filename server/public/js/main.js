@@ -4,9 +4,21 @@ var app = new Vue({
         return {
             state: '', // 状態
             selectWords: [], // 選択肢として表示する単語
-            verbWords: ['am', 'buy', 'choose', 'discover', 'eat', 'understand'],                // 動詞の単語リスト
-            adjectiveWords: ['academic', 'beautiful', 'crazy', 'dirty', 'easy'],  // 形容詞の単語リスト
-            nounWords: ['ant', 'boyfriend', 'child', 'document', 'elevator', 'presentation'],    // 名詞の単語リスト
+            verbWords: ['am', 'buy', 'choose', 'discover', 'eat',
+                        'forget', 'get', 'hate', 'install', 'justify', 
+                        'kill', 'love', 'miss', 'notice', 'own', 
+                        'protect', 'quit', 'remember', 'shake', 'try',
+                        'understand', 'verify', 'want', 'x-ray', 'yell', 'zoom'],      // 動詞の単語リスト
+            adjectiveWords: ['academic', 'beautiful', 'crazy', 'dirty', 'easy',
+                        'fake', 'good', 'handmade', 'ideal', 'juicy',
+                        'kind', 'large', 'modern', 'negative', 'original',
+                        'personal', 'quiet', 'rare', 'sexy', 'tiny', 
+                        'ugly', 'violent', 'well-known', 'xeric', 'yummy', 'zigzag'],  // 形容詞の単語リスト
+            nounWords: ['ant', 'boyfriend', 'child', 'document', 'elevator',
+                        'fact', 'government', 'heaven', 'information', 'job',
+                        'kitchen', 'life', 'mom', 'novel', 'october', 
+                        'presentation', 'question', 'racist', 'secret', 'teacher',
+                        'unicorn', 'voice', 'watermelon', 'xmas', 'yogurt', 'zoo'],    // 名詞の単語リスト
             displayWord: {
                 verb: '',
                 adjective: '',

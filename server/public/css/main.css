@@ -30,11 +30,11 @@ body {
     /* background-color: #0f0a; */
     height: 100%;
     /* 文字のサイズとスケール */
-    font-size: 65px;
-    transform: scale(1.1, 1.3); 
+    font-size: 55px;
 }
 
-.display-word__box span {
+.display-word__box span,
+.word span {
     font-weight: 700;
     text-transform: uppercase;
 }
@@ -47,14 +47,15 @@ body {
 .selected-word__box {
     cursor: pointer;
     border-bottom: 3px solid #000;
+    transition: all 0.1s ease;
 }
 
 .selected-word__box:hover {
-    background-color: #eee;
+    border-width: 5px;
 }
 
 .selected-word {
-    letter-spacing: 5px;
+    white-space: nowrap;
 }
 
 .blank {
@@ -62,14 +63,13 @@ body {
 }
 
 .focus {
-    background-color: #eee;
+    border-width: 5px;
 }
 
 .select-box {
-    /* background-color: #00fa; */
     width: 70%;
     position: absolute;
-    top: 50%;
+    top: 60%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
@@ -82,15 +82,12 @@ body {
 
 .word {
     font-size: 32px;
-    width: 15rem;
-    /* background-color: #0f0; */
+    margin: 1rem;
 }
 
 .word span {
     cursor: pointer;
-    letter-spacing: 5px;
 }
-
 
 .footer {
     position: absolute;
