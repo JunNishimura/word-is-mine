@@ -19,10 +19,10 @@ let displayMessage = {
 };
 
 const client = new Twitter({
-    consumer_key        : "QcmLYvqJyquMhAWsepc7Nv1it",
-    consumer_secret     : "5CLFclfnqXuWHnmwzOtUSszkTYePlMziKu0agBYKd65r5uGeRH",
-    access_token_key    : "1353707181414092802-izd0mEdFV6IqOrqH1k61znPSpNBK6w",
-    access_token_secret : "sR1iWoMshzitcDsnjYefHA62H6BHxsN1Gtbf2lfTI7iJ7"
+    consumer_key        : process.env.TWITTER_CONSUMER_KEY,
+    consumer_secret     : process.env.TWITTER_CONSUMER_SECRET,
+    access_token_key    : process.env.TWITTER_ACCESS_TOKEN_KEY,
+    access_token_secret : process.env.TWITTER_ACCESS_TOKEN_SECRET
 });
 
 const validateSentence = () => {
@@ -34,12 +34,26 @@ const validateSentence = () => {
     return false;
 }
 
-const createSentence = () => {
-    return 'I ' + displayMessage.verb + ' a ' + displayMessage.adjective + ' ' + displayMessage.noun + '\n#WORD_IS_MINE';
+const article = (adj) => {
+    // 形容詞がa, i, u, e, oなら冠詞をanにする
+    return adj.charAt(0) === 'a' ||
+            adj.charAt(0) === 'i' ||
+            adj.charAt(0) === 'u' ||
+            adj.charAt(0) === 'e' ||
+            adj.charAt(0) === 'o' 
+            ? 'AN' : 'A';
 }
 
-const emitTweet = () => {
-    client.post('statuses/update', { status: createSentence() }, function(error, tweet, response) {
+const createSentence = (d_date, d_time) => {
+    let sentence = 'I ' + displayMessage.verb + ' ' + article(displayMessage.adjective) + ' ' + displayMessage.adjective + ' ' + displayMessage.noun + '\n\n';
+    // sentence += d_date + '  ' + d_time + '\n';
+    sentence += '#WORD_IS_MINE';
+
+    return sentence;
+}
+
+const emitTweet = (d_date, d_time) => {
+    client.post('statuses/update', { status: createSentence(d_date, d_time) }, function(error, tweet, response) {
         if(error) throw error;
         console.log(tweet);  // Tweet body.
         console.log(response);  // Raw response object.
@@ -47,31 +61,31 @@ const emitTweet = () => {
 }
 
 io.on('connection', (socket) => {
-    socket.on('verb message', (msg) => {
-        io.emit('verb message', msg);
+    socket.on('verb message', (msg, d_time, d_date) => {
+        io.emit('verb message', msg, d_time, d_date);
         console.log('verb: ', msg);
         displayMessage.verb = msg;
         // 文章が完成したら自動的にツイートする
         if (validateSentence()) {
-            emitTweet();
+            emitTweet(d_time, d_date);
         }
     });
-    socket.on('adjective message', (msg) => {
-        io.emit('adjective message', msg);
+    socket.on('adjective message', (msg, d_time, d_date) => {
+        io.emit('adjective message', msg, d_time, d_date);
         console.log('adjective: ', msg);
         displayMessage.adjective = msg;
         // 文章が完成したら自動的にツイートする
         if (validateSentence()) {
-            emitTweet();
+            emitTweet(d_time, d_date);
         }
     });
-    socket.on('noun message', (msg) => {
-        io.emit('noun message', msg);
+    socket.on('noun message', (msg, d_time, d_date) => {
+        io.emit('noun message', msg, d_time, d_date);
         console.log('noun: ', msg);
         displayMessage.noun = msg;
         // 文章が完成したら自動的にツイートする
         if (validateSentence()) {
-            emitTweet();
+            emitTweet(d_time, d_date);
         }
     });
 
