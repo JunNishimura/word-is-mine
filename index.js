@@ -6,6 +6,7 @@ const path = require('path');
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 const host = process.env.PORT || 3000;
+require('dotenv').config();
 
 // tweet
 const Twitter = require('twitter');
