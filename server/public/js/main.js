@@ -56,7 +56,6 @@ var app = new Vue({
             return this.date.getHours() + ':' + 
                     this.date.getMinutes() + ':' +
                     this.date.getSeconds();
-                    
         },
         displayDate() {
             return this.months[this.date.getMonth()] + ' ' +

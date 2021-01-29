@@ -16,18 +16,21 @@
                     </div>
                     <div class="display-word__box selected-word__box" :class="{blank: displayWord.verb.length === 0, focus: state === 'verb'}" id="verb" @click="changeState('verb')">
                         <span class="selected-word">{{ displayWord.verb }}</span>
+                        <div class="vertical__line" v-if="state === 'verb'"></div>
                     </div>
                     <div class="display-word__box fixed-word__box">
                         <span class="fixed-word">{{ article }}</span>
                     </div>
                     <div class="display-word__box selected-word__box" :class="{blank: displayWord.adjective.length === 0, focus: state === 'adjective'}" id="adjective" @click="changeState('adjective')">
                         <span class="selected-word">{{ displayWord.adjective }}</span>
+                        <div class="vertical__line" v-if="state === 'adjective'"></div>
                     </div>
                     <div class="display-word__box selected-word__box" :class="{blank: displayWord.noun.length === 0, focus: state === 'noun'}" id="noun" @click="changeState('noun')">
                         <span class="selected-word">{{ displayWord.noun }}</span>
+                        <div class="vertical__line"  v-if="state === 'noun'"></div>
                     </div>
                 </div>
-    
+
                 <div class="select-box">
                     <div class="words">
                         <div v-for="(word, index) in selectWords" :key="index" class="word">
