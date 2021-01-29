@@ -3,6 +3,7 @@ const app = express();
 const path = require('path');
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
+const host = process.env.PORT || 3000;
 
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -21,6 +22,6 @@ io.on('connection', (socket) => {
     });
 });
 
-http.listen(3000, () => {
+http.listen(host, () => {
     console.log('listening on *3000');
 });
