@@ -40,6 +40,7 @@ var app = new Vue({
                 11: 'DEC',
             },
             socket: io(),
+            maxDisplayWidth: 1000,
         }
     },
     computed: {
@@ -80,11 +81,15 @@ var app = new Vue({
                 this.displayWord.noun = word;
                 this.socket.emit('noun message', this.displayWord.noun);
             }
+            this.controlDisplayWidth();
         },
         showTimer() {
             setInterval(() => {
                 this.date = new Date();
             }, 1000);
+        },
+        controlDisplayWidth() {
+            console.log(this.$refs.display)
         }
     },
     watch: {
@@ -96,7 +101,7 @@ var app = new Vue({
             } else if (this.state === 'noun') {
                 this.selectWords = this.nounWords;
             }
-        }
+        },
     },
     created() {
         this.state = 'verb';
