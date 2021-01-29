@@ -107,5 +107,15 @@ var app = new Vue({
         this.state = 'verb';
         this.date = new Date();
         this.showTimer();
+
+        // joinしたことを知らせる
+        this.socket.emit('join');   
     },
+    mounted() {
+        this.socket.on('init', (displayMsg) => {
+            this.displayWord.verb = displayMsg.verb;
+            this.displayWord.adjective = displayMsg.adjective;
+            this.displayWord.noun = displayMsg.noun;
+        })
+    }
 });

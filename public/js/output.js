@@ -24,7 +24,7 @@ var app = new Vue({
         sentenceCheck() {
             return this.verb != null && this.adjective != null && this.noun != null
                     && this.verb.length > 0 && this.adjective.length > 0 && this.noun.length > 0;
-        }
+        },
     },
     watch: {
         verb() {
@@ -39,5 +39,5 @@ var app = new Vue({
             this.isSentenceComplete = this.sentenceCheck();
             console.log(this.isSentenceComplete);
         }
-    }
+    },
 })
