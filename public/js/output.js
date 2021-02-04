@@ -18,7 +18,7 @@ var app = new Vue({
             return {
                 0: 'I',
                 1: this.verb,
-                2: 'A',
+                2: 'a',
                 3: this.adjective,
                 4: this.noun
             };
