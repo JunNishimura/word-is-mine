@@ -65,7 +65,7 @@ var app = new Vue({
             if (!this.isSentenceComplete && result) {
                 this.videoFilePath = "./img/video/I.mp4";
                 this.videoIndex = 0;
-                // this.$refs.video.play();
+                this.$refs.video.play();
             }
 
             this.isSentenceComplete = result;
