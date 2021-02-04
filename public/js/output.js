@@ -12,13 +12,22 @@ var app = new Vue({
         }
     },
     computed: {
+        article() { // 冠詞
+            // 形容詞がa, i, u, e, oなら冠詞をanにする
+            return this.adjective.charAt(0) === 'a' ||
+                    this.adjective.charAt(0) === 'i' ||
+                    this.adjective.charAt(0) === 'u' ||
+                    this.adjective.charAt(0) === 'e' ||
+                    this.adjective.charAt(0) === 'o' 
+                    ? 'an' : 'a';
+        },
         sentenceDict() {
             // 文章ができる度に配列を作り変えるのはコストがかかる
             // 動画再生に影響を出さないためにも、辞書型で要素だけを入れ替えるようにする
             return {
                 0: 'I',
                 1: this.verb,
-                2: 'a',
+                2: this.article,
                 3: this.adjective,
                 4: this.noun
             };
