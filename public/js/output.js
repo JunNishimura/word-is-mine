@@ -65,7 +65,6 @@ var app = new Vue({
             if (!this.isSentenceComplete && result) {
                 this.videoFilePath = "./img/video/I.mp4";
                 this.videoIndex = 0;
-                this.$refs.video.play();
                 console.log("complete sentence for the first time");
             }
 
@@ -78,8 +77,10 @@ var app = new Vue({
         changeVideo() {
             const nextVideo = this.getNextVideo(); // 次のvideo名を取得
             const filename = nextVideo + ".mp4";   // ファイル名に変換
-            this.videoFilePath = "./img/video/" + filename; // 再生できるようにパスに変換
-            console.log(this.videoFilePath)
+            this.videoFilePath = "./img/video/" + filename;
+        },
+        onLoaded(e) {
+            e.target.play();
         },
         onEnded() {
             // 文章が成立していないとreturn
@@ -88,7 +89,7 @@ var app = new Vue({
             
             console.log("ended");
             this.changeVideo();
-        }
+        },
     },
     watch: {
         verb() {
