@@ -9,6 +9,9 @@ body {
     font-family: "Helvetica", Arial , Verdana , Roboto , "游ゴシック" , "Yu Gothic" , "游ゴシック体" , "YuGothic" , "ヒラギノ角ゴ Pro W3" , "Hiragino Kaku Gothic Pro" , "Meiryo UI" , "メイリオ" , Meiryo , "ＭＳ Ｐゴシック" , "MS PGothic" , sans-serif;
 }
 
+/* --------------------------------------------------- */
+/* index.htmtl */
+
 #home {
     width: 100%;
     min-height: 100vh;
@@ -109,6 +112,23 @@ body {
     justify-content: space-between;
     align-items: center;
 }
+
+/* --------------------------------------------------- */
+/* output.html */
+.output__container {
+    width: 100%;
+    min-height: 100vh;
+    position: relative;
+}
+
+.output__video {
+    /* background-color: #f00; */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
 
 /* IPad用, IPad Pro用 responsive 設定 */
 @media (max-width: 1024px) and (orientation: landscape), 

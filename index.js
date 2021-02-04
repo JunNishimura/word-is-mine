@@ -45,15 +45,18 @@ const article = (adj) => {
             ? 'an' : 'a';
 }
 
-const createSentence = () => {
+// d_time: display time
+// d_date: display date
+const createSentence = (d_time, d_date) => {
     let sentence = 'I ' + displayMessage.verb + ' ' + article(displayMessage.adjective) + ' ' + displayMessage.adjective + ' ' + displayMessage.noun + '\n\n';
+    sentence += d_time + '  ' + d_date + '\n\n';
     sentence += '#WORD_IS_MINE';
 
     return sentence.toUpperCase();
 }
 
-const emitTweet = () => {
-    client.post('statuses/update', { status: createSentence() }, function(error, tweet, response) {
+const emitTweet = (d_time, d_date) => {
+    client.post('statuses/update', { status: createSentence(d_time, d_date) }, function(error, tweet, response) {
         if(error) throw error;
         console.log(tweet);  // Tweet body.
         console.log(response);  // Raw response object.
@@ -61,38 +64,39 @@ const emitTweet = () => {
 }
 
 io.on('connection', (socket) => {
-    socket.on('verb message', (msg) => {
-        io.emit('verb message', msg);
+    socket.on('verb message', (msg, d_time, d_date) => {
+        io.emit('verb message', msg, d_time, d_date);
         console.log('verb: ', msg);
         displayMessage.verb = msg;
         // 文章が完成したら自動的にツイートする
         if (validateSentence()) {
-            emitTweet();
+            emitTweet(d_time, d_date);
         }
     });
-    socket.on('adjective message', (msg) => {
-        io.emit('adjective message', msg);
+    socket.on('adjective message', (msg, d_time, d_date) => {
+        io.emit('adjective message', msg, d_time, d_date);
         console.log('adjective: ', msg);
         displayMessage.adjective = msg;
         // 文章が完成したら自動的にツイートする
         if (validateSentence()) {
-            emitTweet();
+            emitTweet(d_time, d_date);
         }
     });
-    socket.on('noun message', (msg) => {
-        io.emit('noun message', msg);
+    socket.on('noun message', (msg, d_time, d_date) => {
+        io.emit('noun message', msg, d_time, d_date);
         console.log('noun: ', msg);
         displayMessage.noun = msg;
         // 文章が完成したら自動的にツイートする
         if (validateSentence()) {
-            emitTweet();
+            emitTweet(d_time, d_date);
         }
     });
 
     // 新規ページアクセス時に呼び出される
     socket.on('join', () => {
         // 現在選択されている単語を新規ユーザーの入力画面にも反映する
-        socket.emit('init', displayMessage);
+        console.log('new user joined')
+        io.emit('init', displayMessage);
     })
 });
 

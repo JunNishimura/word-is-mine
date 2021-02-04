@@ -6,38 +6,88 @@ var app = new Vue({
             verb: '',
             adjective: '',
             noun: '',
-            isSentenceComplete: false
+            isSentenceComplete: false,
+            videoFilePath: '', // 再生するvideoのファイル名 
+            videoIndex: 0,     // senteceオブジェクトから値を取るためのインデックス
+        }
+    },
+    computed: {
+        sentenceDict() {
+            // 文章ができる度に配列を作り変えるのはコストがかかる
+            // 動画再生に影響を出さないためにも、辞書型で要素だけを入れ替えるようにする
+            return {
+                0: 'I',
+                1: this.verb,
+                2: 'A',
+                3: this.adjective,
+                4: this.noun
+            };
         }
     },
     mounted() {
-        this.socket.on('verb message', (msg) => {
+        this.socket.on('verb message', (msg, d_time, d_date) => {
             this.verb = msg;
         });
-        this.socket.on('adjective message', (msg) => {
+        this.socket.on('adjective message', (msg, d_time, d_date) => {
             this.adjective = msg;
         });
-        this.socket.on('noun message', (msg) => {
+        this.socket.on('noun message', (msg, d_time, d_date) => {
             this.noun = msg;
         });
+        // output.htmlに入った時に、index.htmlで入力があった場合はそれを反映させる
+        this.socket.on('init', (displayMessage) => {
+            console.log("init");
+            this.verb      = displayMessage.verb;
+            this.adjective = displayMessage.adjective;
+            this.noun      = displayMessage.noun;
+        })
+    },
+    created() {
+        // server側に新しくjoinしたことを通知する
+        this.socket.emit('join');
     },
     methods: {
         sentenceCheck() {
-            return this.verb != null && this.adjective != null && this.noun != null
+            result = this.verb != null && this.adjective != null && this.noun != null
                     && this.verb.length > 0 && this.adjective.length > 0 && this.noun.length > 0;
+            
+            // 初めてsenteceが完成した時に動画の設定を初期化する
+            if (!this.isSentenceComplete && result) {
+                this.videoFilePath = "./img/video/I.mp4";
+                this.videoIndex = 0;
+            }
         },
+        getNextVideo() {
+            this.videoIndex = (this.videoIndex + 1) % 5;
+            return this.sentenceDict[this.videoIndex];
+        },
+        changeVideo() {
+            const nextVideo = this.getNextVideo(); // 次のvideo名を取得
+            const filename = nextVideo + ".mp4";   // ファイル名に変換
+            this.videoFilePath = "./img/video/" + filename; // 再生できるようにパスに変換
+            console.log(this.videoFilePath)
+        },
+        onEnded() {
+            // 文章が成立していないとreturn
+            // if (!this.isSentenceComplete) 
+            //     return;
+            
+            console.log("ended");
+            this.changeVideo();
+        }
     },
     watch: {
         verb() {
-            this.isSentenceComplete = this.sentenceCheck();
-            console.log(this.isSentenceComplete);
+            if (!this.isSentenceComplete)
+                this.isSentenceComplete = this.sentenceCheck();
         },
         adjective() {
-            this.isSentenceComplete = this.sentenceCheck();
-            console.log(this.isSentenceComplete);
+            if (!this.isSentenceComplete)
+                this.isSentenceComplete = this.sentenceCheck();
         },
         noun() {
-            this.isSentenceComplete = this.sentenceCheck();
-            console.log(this.isSentenceComplete);
-        }
+            if (!this.isSentenceComplete)
+                this.isSentenceComplete = this.sentenceCheck();
+        },
     },
 })

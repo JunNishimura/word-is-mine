@@ -73,13 +73,13 @@ var app = new Vue({
         selectWord(word) {
             if (this.state === 'verb') {
                 this.displayWord.verb = word;
-                this.socket.emit('verb message', this.displayWord.verb);
+                this.socket.emit('verb message', this.displayWord.verb, this.displayTime, this.displayDate);
             } else if (this.state === 'adjective') {
                 this.displayWord.adjective = word;
-                this.socket.emit('adjective message', this.displayWord.adjective);
+                this.socket.emit('adjective message', this.displayWord.adjective, this.displayTime, this.displayDate);
             } else if (this.state === 'noun') {
                 this.displayWord.noun = word;
-                this.socket.emit('noun message', this.displayWord.noun);
+                this.socket.emit('noun message', this.displayWord.noun, this.displayTime, this.displayDate);
             }
             this.controlDisplayWidth();
         },
@@ -109,15 +109,5 @@ var app = new Vue({
         this.date = new Date();
         this.date.setHours(this.date.getHours() + 18); // JSTに合わせる
         this.showTimer();
-
-        // joinしたことを知らせる
-        this.socket.emit('join');   
     },
-    mounted() {
-        this.socket.on('init', (displayMsg) => {
-            this.displayWord.verb = displayMsg.verb;
-            this.displayWord.adjective = displayMsg.adjective;
-            this.displayWord.noun = displayMsg.noun;
-        })
-    }
 });

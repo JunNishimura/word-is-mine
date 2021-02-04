@@ -3,16 +3,14 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="./css/main.css">
         <title>Word is Mine</title>
     </head>
     <body>
         <div id="output">
-            <h1>Output Page</h1>
-            <ul id="messages">
-                <span>{{ verb }}</span>
-                <span>{{ adjective }}</span>
-                <span>{{ noun }}</span>
-            </ul>
+            <div class="output__container">
+                <video class="output__video" :src="videoFilePath" @ended="onEnded()" width="600" autoplay></video>
+            </div>
         </div>
         <script src="/socket.io/socket.io.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
