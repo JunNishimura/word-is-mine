@@ -9,7 +9,7 @@
     <body>
         <div id="output">
             <div class="output__container">
-                <video class="output__video" :src="videoFilePath" @ended="onEnded()" width="600" autoplay></video>
+                <video ref="video" class="output__video" :src="videoFilePath" @ended="onEnded()" width="600" autoplay></video>
             </div>
         </div>
         <script src="/socket.io/socket.io.js"></script>

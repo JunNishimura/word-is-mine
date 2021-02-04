@@ -40,6 +40,7 @@ var app = new Vue({
             this.verb      = displayMessage.verb;
             this.adjective = displayMessage.adjective;
             this.noun      = displayMessage.noun;
+            this.sentenceCheck();
         })
     },
     created() {
@@ -55,7 +56,10 @@ var app = new Vue({
             if (!this.isSentenceComplete && result) {
                 this.videoFilePath = "./img/video/I.mp4";
                 this.videoIndex = 0;
+                // this.$refs.video.play();
             }
+
+            this.isSentenceComplete = result;
         },
         getNextVideo() {
             this.videoIndex = (this.videoIndex + 1) % 5;
@@ -69,8 +73,8 @@ var app = new Vue({
         },
         onEnded() {
             // 文章が成立していないとreturn
-            // if (!this.isSentenceComplete) 
-            //     return;
+            if (!this.isSentenceComplete) 
+                return;
             
             console.log("ended");
             this.changeVideo();
@@ -79,15 +83,15 @@ var app = new Vue({
     watch: {
         verb() {
             if (!this.isSentenceComplete)
-                this.isSentenceComplete = this.sentenceCheck();
+                this.sentenceCheck();
         },
         adjective() {
             if (!this.isSentenceComplete)
-                this.isSentenceComplete = this.sentenceCheck();
+                this.sentenceCheck();
         },
         noun() {
             if (!this.isSentenceComplete)
-                this.isSentenceComplete = this.sentenceCheck();
+                this.sentenceCheck();
         },
     },
 })

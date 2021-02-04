@@ -89,9 +89,6 @@ var app = new Vue({
                 this.date.setHours(this.date.getHours() + 18); // JSTに合わせる
             }, 1000);
         },
-        controlDisplayWidth() {
-            console.log(this.$refs.display)
-        }
     },
     watch: {
         state() {
