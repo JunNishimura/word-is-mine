@@ -101,9 +101,20 @@ var app = new Vue({
         },
     },
     created() {
+        // server側に新しくjoinしたことを通知する
+        this.socket.emit('join');
+
         this.state = 'verb';
         this.date = new Date();
         this.date.setHours(this.date.getHours() + 18); // JSTに合わせる
         this.showTimer();
     },
+    mounted() {
+        this.socket.on('init', (displayMessage) => {
+            console.log("init");
+            this.displayWord.verb      = displayMessage.verb;
+            this.displayWord.adjective = displayMessage.adjective;
+            this.displayWord.noun      = displayMessage.noun;
+        })
+    }
 });

@@ -66,6 +66,7 @@ var app = new Vue({
                 this.videoFilePath = "./img/video/I.mp4";
                 this.videoIndex = 0;
                 this.$refs.video.play();
+                console.log("complete sentence for the first time");
             }
 
             this.isSentenceComplete = result;
