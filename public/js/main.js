@@ -81,7 +81,6 @@ var app = new Vue({
                 this.displayWord.noun = word;
                 this.socket.emit('noun message', this.displayWord.noun, this.displayTime, this.displayDate);
             }
-            this.controlDisplayWidth();
         },
         showTimer() {
             setInterval(() => {
