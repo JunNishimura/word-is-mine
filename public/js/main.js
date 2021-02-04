@@ -86,6 +86,7 @@ var app = new Vue({
         showTimer() {
             setInterval(() => {
                 this.date = new Date();
+                this.date.setHours(this.date.getHours() + 18); // JSTに合わせる
             }, 1000);
         },
         controlDisplayWidth() {
@@ -106,6 +107,7 @@ var app = new Vue({
     created() {
         this.state = 'verb';
         this.date = new Date();
+        this.date.setHours(this.date.getHours() + 18); // JSTに合わせる
         this.showTimer();
 
         // joinしたことを知らせる
