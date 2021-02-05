@@ -106,7 +106,7 @@ var app = new Vue({
 
         this.state = 'verb';
         this.date = new Date();
-        this.date.setHours(this.date.getHours() + 18); // JSTに合わせる
+        // this.date.setHours(this.date.getHours()); // JSTに合わせる
         this.showTimer();
     },
     mounted() {
